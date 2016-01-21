@@ -1,0 +1,41 @@
+# Increase volume
+"amixer -c 1 set Master 5+"
+   m:0x0 + c:123
+   XF86AudioRaiseVolume
+
+# Decrease volume
+"amixer -c 1 set Master 5-"
+   m:0x0 + c:122
+   XF86AudioLowerVolume
+
+# Toggle volume
+"amixer -c 1 set Master toggle"
+   m:0x0 + c:121
+   XF86AudioMute
+
+# Increase brightness
+"xbacklight -inc 10"
+   m:0x0 + c:233
+   XF86MonBrightnessUp
+
+# Decrease brightness
+"xbacklight -dec 10"
+   m:0x0 + c:232
+   XF86MonBrightnessDown
+
+# Shutdown
+"sudo poweroff"
+   m:0x10 + c:152
+   XF86Explorer
+"sudo poweroff"
+   m:0x0 + c:150
+   XF86Sleep
+
+# Reboot
+"sudo reboot"
+   m:0x10 + c:128
+   XF86LaunchA
+"sudo reboot"
+   m:0x0 + c:225
+   XF86Search
+
