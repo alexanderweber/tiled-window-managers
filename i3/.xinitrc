@@ -1,8 +1,9 @@
 # check if DP1-1 is connected
-if (xrandr | grep "DP-1-1 connected" > /dev/null)
+if (xrandr | grep "DP1-1 connected" > /dev/null)
 then
- xrandr --output eDP-1 --off
- xrandr --output DP-1-2 --off
+ xrandr --output eDP1 --off
+ xrandr --output DP1-2 --off
+ cp ~/.asoundrc-usb ~/.asoundrc
 fi
 
 # set german layout
