@@ -1,0 +1,4 @@
+if (/usr/bin/truecrypt --text --list) then { /usr/bin/truecrypt 
+-d sleep 20
+}
+fi
