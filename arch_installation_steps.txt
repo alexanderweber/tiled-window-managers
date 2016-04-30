@@ -132,10 +132,6 @@ gpg --recv-key XXXXXXXXXXXXX
 sudo yaourt archey
 2
 
-pacman -S bluez bluez-utils
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
-
 # Sound bekommen
 sudo nano /etc/modprobe.d/alsa-base.conf
 options snd_hda_intel index=1,0
@@ -145,13 +141,6 @@ pacmd list-sinks | grep -e 'name:' -e 'index'
 sudo nano /etc/pulse/default.pa
 # Zeile am Ende der Datei aendern.
 set-default-sink alsa_output.usb-C-Media_Electronics_Inc._ThinkPad_OneLink_Pro_Dock_Audio-00.analog-stereo
-
-# Inellij idea
-yaourt -S jdk
-# Laden und entpack nach /usr/local/idea-IU-XXX.XXX.X
-/usr/local/idea-IU-XXX.XXX.X/bin/idea.sh
-# Link kann nicht erzeugt werden, daher manuell erstellen:
-sudo ln -s /usr/local/idea-IU-XXX.XXX.X/bin/idea.sh /usr/bin/idea
 
 # Beim reboot/poweroff verursacht etwas nach watchdog 90 Sekunden Wartezeiten
 # Das soll das verhindern:

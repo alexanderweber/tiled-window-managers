@@ -151,4 +151,61 @@ else
   cp_wdir ./etc/X11/xorg.conf.d/50-synaptics.conf /etc/X11/xorg.conf.d/50-synaptics.conf
 fi
 
+read -r -p "sollen browser installiert werden? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  sudo pacman -S firefox
+  sudo pacman -S chromium
+  sudo pacman -S luakit
+fi
+
+read -r -p "sollen dev tools installiert werden? (java jdk, idea, smartgit) [Y/n] " -n 1 
+response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  read -r -p "smartgit installieren? [Y/n] " -n 1 response
+  response=${response,,}    # tolower
+  echo
+  if [[ $response =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}skip installation${NC}"
+  else
+    yaourt -S smartgit
+  fi
+
+  read -r -p "jdk installieren? [Y/n] " -n 1 response
+  response=${response,,}    # tolower
+  echo
+  if [[ $response =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}skip installation${NC}"
+  else
+    yaourt -S jdk
+  fi
+
+  read -r -p "jdk installieren? [Y/n] " -n 1 response
+  response=${response,,}    # tolower
+  echo
+  if [[ $response =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}skip installation${NC}"
+  else
+    exec ./idea-installer
+  fi
+fi
+
+read -r -p "bluetooth installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  sudo pacman -S bluez bluez-utils
+  sudo systemctl enable bluetooth.service
+  sudo systemctl start bluetooth.service
+fi
+
 xrdb -merge ~/.Xresources
