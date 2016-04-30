@@ -40,8 +40,10 @@ URxvt*color15:    #D0D0D0
 
 
 ! Установка шрифта "Droid Sans Mono Italic" с размером 20 пунктов c сглаживанием
-URxvt.font: xft:Droid Sans Mono:pixelsize=20:antialias=true
-URxvt.boldFont: xft:Droid Sans Mono:bold:pixelsize=20:antialias=true
+URxvt.font: xft:Droid Sans Mono:pixelsize=16:antialias=true
+! Powerline:
+! URxvt.font: xft:Terminess Powerline:size=12
+URxvt.boldFont: xft:Droid Sans Mono:bold:pixelsize=16:antialias=true
 
 
 ! Цвет фона
@@ -61,7 +63,7 @@ URxvt*scrollBar: false
 
 
 ! подгружаем плагины
- URxvt.perl-ext-common:  default,matcher,url-select
+URxvt.perl-ext-common: default,matcher,url-select,tabbed,keyboard-select,resize-font
 
 ! Псевдопрозрачность
 URxvt.transparent: true
@@ -70,3 +72,38 @@ URxvt.shading: 25
 
 ! первоночальный размер окна
 URxvt.geometry: 80x25
+
+! binds ^+shift+V to "clipboard" extension
+! URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+! desiables iso14755 mode
+URxvt.iso14755: False
+URxvt.iso14755_52: false
+
+! Farbe der Tabs
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+! Resizing font on the fly
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger: C-Up
+
+! Selection Mode
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+
+! Use Meta-Escape to activate selection mode, then use the following keys:
+! h/j/k/l:    Move cursor left/down/up/right (also with arrow keys)
+! g/G/0/^/$/H/M/L/f/F/;/,/w/W/b/B/e/E: More vi-like cursor movement keys
+! '/'/?:      Start forward/backward search
+! n/N:        Repeat last search, N: in reverse direction
+! Ctrl-f/b:   Scroll down/up one screen
+! Ctrl-d/u:   Scroll down/up half a screen
+! v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
+! y/Return:   Copy selection to primary buffer, Return: quit afterwards
+! Y:          Copy selected lines to primary buffer or cursor line and quit
+! q/Escape:   Quit keyboard selection mode
+
+URxvt.keysym.C-Shift-Return: ranger \015 
+

@@ -1,0 +1,9 @@
+{
+  "1    ": "xrandr --output DP1-1 --primary --auto --output eDP1 --off --output DP1-2 --off",
+  "2       ": "xrandr --output eDP1 --right-of DP1-1 --auto --output DP1-1 --primary --auto --output DP1-2 --off",
+  "3 ": "xrandr --output eDP1 --off --output DP1-1 --off --output DP1-2 --primary --auto",
+  "4    ": "xrandr --output eDP1 --off --output DP1-1 --primary --auto --output DP1-2 --left-of DP1-1 --auto",
+  "5       ": "xrandr --output eDP1 --right-of DP1-1 --auto --output DP1-1 --primary --auto --output DP1-2 --left-of DP1-1 --auto",
+  "6       ": "xrandr --output eDP1 --primary --auto --output DP1-1 --off --output DP1-2 --off",
+  "7            ": "xrandr --output eDP1 --primary --auto --output DP1-1 --off --output DP1-2 --left-of eDP1 --auto"
+}

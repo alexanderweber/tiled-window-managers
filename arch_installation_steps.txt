@@ -1,0 +1,198 @@
+loadkeys de-latin1
+# setfont lat9w-16
+wifi-menu
+timedatectl set-ntp true
+gdsik /dev/sdb
+o
+n
+ENTER
+ENTER
++512M
+EF00
+n
+ENTER
+ENTER
+ENTER
+ENTER
+w
+mkfs.ext4 /dev/sdb2
+mkfs.fat -F32 /dev/sdb1
+mount /dev/sdb2 /mnt
+mkdir -p /mnt/boot
+mount /dev/sdb1 /mnt/boot
+pacstrap -i /mnt base base-devel
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt /bin/bash
+
+pacman -S openssh
+ip addr
+# bei jedem start
+systemctl enable sshd.service
+# einmalig
+systemctl start sshd.service
+
+# Alles weitere per putty einfügen
+
+nano /etc/locale.gen
+# Uncoment en_US.UTF-8 und ISO
+locale-gen
+
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo "KEYMAP=de-latin1" > /etc/vconsole.conf
+
+tzselect
+7
+16
+2
+1
+ln -s /usr/share/zoneinfo/Zone/SubZone /etc/localtime
+timedatectl set-ntp true
+hwclock --systohc --utc
+
+# Filemanager, firefox, terminal, Fonts, Sound, video
+pacman -S pcmanfm firefox rxvt-unicode ttf-dejavu ttf-droid ttf-liberation alsa-utils xf86-video-intel xf86-input-synaptics xorg-server xorg-xinit xorg-twm xterm xorg-server-devel iw wpa_actiond wpa_supplicant dialog grub efibootmgr os-prober ntp xorg-xrandr
+
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+passwd
+
+# Beep tone muten
+rmmod pcspkr
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
+
+useradd -m -g users -G wheel -s /bin/bash alex
+passwd alex
+EDITOR=nano visudo
+# lösche zeile mit "Same thing wihout a password" bei WHEEL
+
+exit
+reboot
+
+sudo wifi-menu -o
+systemctl enable netctl-auto@wlp4s0.service
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+localectl --no-convert set-x11-keymap de pc105 nodeadkeys
+
+pacman -S wget
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+tar -xvzf package-query.tar.gz
+cd package-query
+makepkg -si
+
+cd ..
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+tar -xvzf yaourt.tar.gz
+cd yaourt
+makepkg -si
+
+cd..
+rm -r yaourt
+rm -r package-query
+
+yaourt -S google-chrome
+
+ntpd -qg
+
+# In Windows 10:
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation]
+"RealTimeIsUniversal"=dword:00000001
+
+cd ~/
+wget https://raw.githubusercontent.com/zunder/tiled-window-managers/master/URxvt/.Xresources
+xrdb -merge ~/.Xresources &
+
+yaourt -S dropbox-cli
+dropbox-cli help
+
+# gehe in die Dropbox/Truecrypt
+# Alternative: cryptsetup nutzen
+cp truecrypt-7.1a-linux-x64.tar.gz ~/
+cd ~/
+tar -xf truecrypt-7.1a-linux-x64.tar.gz
+rm truecrypt-7.1a-linux-x64.tar.gz 
+./truecrypt-7.1a-setup-x64
+rm truecrypt-7.1a-setup-x64
+sudo pacman -S fuse
+wget -O /etc/rc.local.shutdown https://raw.githubusercontent.com/zunder/tiled-window-managers/master/truecrypt/etc/rc.local.shutdown
+
+# NTFS Schreibzugriff:
+sudo pacman -S ntfs-3g
+
+
+# Matlab
+# gehe zu dem ISO ornder
+sudo mount -o loop R2015a-glnxa64.iso /mnt/disk
+sudo /mnt/disk/install
+yaourt -S ncurses5-compat-libs
+gpg --recv-key XXXXXXXXXXXXX
+
+sudo yaourt archey
+2
+
+pacman -S bluez bluez-utils
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+
+# Sound bekommen
+sudo nano /etc/modprobe.d/alsa-base.conf
+options snd_hda_intel index=1,0
+# PulseAudio
+sudo pacman -S pulseaudio pulseaudio-alsa pavucontrol
+pacmd list-sinks | grep -e 'name:' -e 'index'
+sudo nano /etc/pulse/default.pa
+# Zeile am Ende der Datei aendern.
+set-default-sink alsa_output.usb-C-Media_Electronics_Inc._ThinkPad_OneLink_Pro_Dock_Audio-00.analog-stereo
+
+# Inellij idea
+yaourt -S jdk
+# Laden und entpack nach /usr/local/idea-IU-XXX.XXX.X
+/usr/local/idea-IU-XXX.XXX.X/bin/idea.sh
+# Link kann nicht erzeugt werden, daher manuell erstellen:
+sudo ln -s /usr/local/idea-IU-XXX.XXX.X/bin/idea.sh /usr/bin/idea
+
+# Beim reboot/poweroff verursacht etwas nach watchdog 90 Sekunden Wartezeiten
+# Das soll das verhindern:
+ln -s /dev/null /etc/sysctl.d/50-coredump.conf
+
+# Recent files Historie verhindern in GTK 2.0 mit 
+nano ~/.config/gtk-2.0/gtkfilechooser.ini
+StartupMode=cwd
+# oder fuer alles andere 
+# aus Dropbox kopieren:
+# arch/.config/autostart/monitor-recently-used.desktop
+# arch/.config/i3/monitor-recently-used
+# Inotify installieren:
+# sudo pacman -S inotify-tools
+
+##### i3
+
+pacman -S i3 dmenu
+nano ~/.xinitrc
+#! /bin/bash
+xrdb -merge ~/.Xresources &
+exec i3
+
+yaourt -S ttf-font-awesome
+
+# Image viewer
+sudo pacman -S sxiv
+
+# nano ~/.bash_profile
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+
+
+##### Awesome
+sudo pacman -S slim
+sudo systemctl enable slim.service
+
+nano ~/.xinitrc
+exec awesome
+
+mkdir -p ~/.config/awesome
+cp /etc/xdg/awesome/rc.lua ~/.config/awesome/
+cp -r /usr/share/awesome/* ~/.config/awesome/
+sudo pacman -S pcmanfm firefox rxvt-unicode
+

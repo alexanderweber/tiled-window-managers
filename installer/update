@@ -1,0 +1,21 @@
+#! /bin/bash
+
+cp_wdir() { mkdir -p -- "$(dirname -- "$2")" && cp -- "$1" "$2" ; }
+
+# config kopieren
+cp -R ~/.config/i3/config .config/i3/config
+cp -R ~/.config/i3status/config .config/i3status/config
+
+# update umpv dateien
+cp -R /usr/bin/umpv  ./usr/bin/umpv
+cp -R /usr/bin/umpv2 ./usr/bin/umpv2
+
+cp -R ~/.config/i3/musickeys.sh .config/i3/musickeys.sh
+
+cp -R ~/.config/i3/myi3status.sh .config/i3/myi3status.sh
+
+cp_wdir ~/.config/rofi/dmenu_nested.py .config/rofi/dmenu_nested.py
+cp_wdir ~/.config/rofi/programs.json .config/rofi/programs.json
+cp_wdir ~/.config/rofi/screen_choice.json .config/rofi/screen_choice.json
+
+cp_wdir /etc/X11/xorg.conf.d/50-synaptics.conf ./etc/X11/xorg.conf.d/50-synaptics.conf

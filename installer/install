@@ -1,0 +1,154 @@
+#! /bin/bash
+
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+cp_wdir() { mkdir -p -- "$(dirname -- "$2")" && cp -- "$1" "$2" ; }
+
+read -r -p "HiDPI installation (z.B. MacBook Pro Retina)? [y/N] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Yy]$ ]]; then
+  hidpi=1
+else
+  hidpi=0
+fi
+
+### i3 config kopieren
+read -r -p "i3 config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp_wdir .config/i3/config ~/.config/i3/config
+fi
+
+read -r -p "i3status config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp_wdir .config/i3status/config ~/.config/i3status/config
+fi
+
+read -r -p "i3 my status config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp .config/i3/myi3status.sh ~/.config/i3/myi3status.sh
+fi
+
+
+### mpv installieren
+read -r -p "mpv installieren / umpv und umpv2 kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  sudo pacman -S mpv
+  sudo cp ./usr/bin/umpv  /usr/bin/umpv
+  sudo cp ./usr/bin/umpv2 /usr/bin/umpv2
+fi
+
+### git installieren
+read -r -p "git installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip setting${NC}"
+else
+  sudo pacman -S git
+  git config --global user.email "alex.weber@live.com"
+  git config --global user.name "Alex Weber"
+fi
+
+### spotify installieren
+read -r -p "yaourt -S spotify ausfuehren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installing${NC}"
+else
+  yaourt -S spotify
+  sudo pacman -S xdotool
+
+  read -r -p "musickeys.sh kopieren (Belegung der spotify keys)? [Y/n] " -n 1 response
+  response=${response,,}    # tolower
+  if [[ $response =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}skip copying${NC}"
+  else
+    cp .config/i3/musickeys.sh ~/.config/i3/musickeys.sh
+  fi
+fi
+
+### Backlight
+read -r -p "xbacklight installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installing${NC}"
+else
+  sudo pacman -S xorg-xbacklight
+fi
+
+
+### Rofi
+read -r -p "rofi installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installing${NC}"
+else
+  sudo pacman -S rofi
+  cp_wdir .config/rofi/dmenu_nested.py ~/.config/rofi/dmenu_nested.py
+  cp_wdir .config/rofi/programs.json ~/.config/rofi/programs.json
+  cp_wdir .config/rofi/screen_choice.json ~/.config/rofi/screen_choice.json
+  
+  if [ $hidpi = 1 ]; then
+    echo "rofi.dpi: 192" >> ~/.Xresources
+  fi
+fi
+
+### Screenshots
+read -r -p "teiler installieren (Screenshots/Screencasts)? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  yaourt -S teiler imgur
+fi
+
+read -r -p "awesome font installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  yaourt -S ttf-font-awesome
+fi
+
+read -r -p "ranger installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  sudo pacman -S ranger highlight atool w3m poppler perl-image-exiftool mediainfo ffmpegthumbnaile p7zip unrar zip unzip
+fi
+
+read -r -p "synaptics installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  sudo pacman -S xf86-input-synaptics
+  cp_wdir ./etc/X11/xorg.conf.d/50-synaptics.conf /etc/X11/xorg.conf.d/50-synaptics.conf
+fi
+
+xrdb -merge ~/.Xresources

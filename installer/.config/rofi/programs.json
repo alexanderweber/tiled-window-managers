@@ -1,0 +1,72 @@
+{
+    "1  Browser      ": {
+	"1 chrome  ": "i3-msg workspace 1: ; exec google-chrome-stable",
+        "2 firefox ": "firefox",
+	"3 opera   ": "opera",
+        "4 luakit": "luakit"
+    },
+    "2  Dev          ": {
+	"1 idea": "i3-msg workspace 3: ; layout tabbed; exec idea",
+	"2 matlab": "i3-msg workspace 3: ; layout tabbed; exec matlab",
+	"3 smartgit": "i3-msg workspace 4: ; layout tabbed; exec smartgit"
+    },
+    "3  Mail         ": {
+	"1 text-mail": {
+	    "1 mutt": "urxvt -e mutt"
+	}
+    },
+    "4  Terminal     ": {
+        "1 urxvt": "urxvt",
+	"2 termite": "termite"
+    },
+    "5  Editor/PDF   ":{
+	"1 nano": "urxvt -e nano",
+        "2 vi": "urxvt -e vi",
+	"3 zathura": "zathura"
+    },
+    "6  Files        ": {
+        "1 ranger": "urxvt -e ranger",
+	"2 jdownloader": "jdownloader"
+    },
+    "7  Messenger    ": {
+	"1 irssi": "urxvt -e irssi",
+	"2 whatsie": "whatsie",
+	"3 telegram": "telegram"
+    },
+    "8  Settings     ": {
+        "1 network manager": "nm-connection-editor",
+        "2 nm applet": "nm-applet",
+	"3 conky": "conky",
+	"4 htop": "urxvt -e htop",
+	"5 alsamixer": "alsamixer",
+	"6 pavucontrol": "pavucontrol"
+    },
+    "9  Music        ": {
+	"1 spotify ": "spotify",
+	"2 mopidy": "mopidy",
+	"3 ncmpcpp": "urxvt -e ncmpcpp",
+	"4 gmpc": "gmpc"	
+    },
+    "10 Video        ": {
+	"1 kodi": "kodi",
+	"2 mpv": "mpv",
+	"3 umpv": "umpv",
+	"4 umpv2": "umpv2",
+	"5 youtube ": {
+		"1 justkiddingparty": "urxvt -e youtube-viewer -C -SV -W --channel-vid=UCyG_mUXBIWaoLkuiRnAWDvA --results=50",
+		"2 all subscriptions": "urxvt -e youtube-viewer -C -S --results=50 --subs-order=alphabetical"
+        }
+    }, 
+    "11 Image        ": {
+	"1 sxiv": "sxiv"
+    },
+    "12 Screenshot   ": {
+	"1 scrot": "scrot",
+	"2 screencloud": "screencloud",
+	"3 teiler": "teiler"
+    },
+    "13 News         ": {
+	"1 corebird ": "corebird"
+    }
+}
+
