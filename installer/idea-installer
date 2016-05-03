@@ -3,6 +3,6 @@ installfolder=/usr/local/IDEA
 read -r -p "wo befindet sich die geladene datei? " downloadpath
 echo
 sudo mkdir -p $installfolder
-sudo tar -xf $downloadpath -C installfolder --strip-components=1
+sudo tar -xf $downloadpath -C $installfolder --strip-components=1
 sudo ln -s "$installfolder/bin/idea.sh" /usr/bin/idea
 exec idea
