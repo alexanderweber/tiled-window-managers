@@ -13,6 +13,7 @@ cp -R /usr/bin/umpv2 ./usr/bin/umpv2
 cp -R ~/.config/i3/musickeys.sh .config/i3/musickeys.sh
 
 cp -R ~/.config/i3/myi3status.sh .config/i3/myi3status.sh
+cp -R ~/.config/i3/screen-connected .config/i3/screen-connected
 
 cp_wdir ~/.config/rofi/dmenu_nested.py .config/rofi/dmenu_nested.py
 cp_wdir ~/.config/rofi/programs.json .config/rofi/programs.json
