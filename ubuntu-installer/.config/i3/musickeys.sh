@@ -15,5 +15,5 @@ case $1 in
        exit 1
         ;;
 esac
-xdotool key --window $(xdotool search --name "Spotify (Premium |Unlimited |Free )?- Linux Preview"|head -n1) $key
+xdotool key --window $(xdotool search --class "spotify"|head -n1) $key
 exit 0

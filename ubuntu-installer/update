@@ -3,14 +3,14 @@
 cp_wdir() { mkdir -p -- "$(dirname -- "$2")" && cp -- "$1" "$2" ; }
 
 # config kopieren
-cp_wdir -R ~/.config/i3/config .config/i3/config
-cp_wdir -R ~/.config/i3status/config .config/i3status/config
-cp_wdir -R ~/.Xresources .Xresources
-cp_wdir -R ~/.config/urxvt/urxvt.config .config/urxvt/urxvt.config
+cp_wdir ~/.config/i3/config .config/i3/config
+cp_wdir ~/.config/i3status/config .config/i3status/config
+cp_wdir ~/.Xresources .Xresources
+cp_wdir ~/.config/urxvt/urxvt.config .config/urxvt/urxvt.config
 
 # update umpv dateien
-cp -R /usr/bin/umpv  ./usr/bin/umpv
-cp -R /usr/bin/umpv2 ./usr/bin/umpv2
+cp -R /usr/bin/umpv  usr/bin/umpv
+cp -R /usr/bin/umpv2 usr/bin/umpv2
 
 cp -R ~/.config/i3/musickeys.sh .config/i3/musickeys.sh
 

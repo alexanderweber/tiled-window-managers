@@ -49,10 +49,10 @@ bindsym $mod+g exec ~/.config/rofi/dmenu_nested.py -j ~/.config/rofi/screen_choi
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+odiaeresis focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -61,22 +61,15 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+odiaeresis move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
 bindsym $mod+Ctrl+Shift+Left move workspace to output left
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Shift+v split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -162,10 +155,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym odiaeresis resize grow width 10 px or 10 ppt
+        bindsym l resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym j resize shrink height 5 px or 5 ppt
+        bindsym h resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -179,6 +172,12 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left resize grow width 5 px or 5 ppt
+bindsym $mod+Shift+Down resize grow height 5 px or 5 ppt
+bindsym $mod+Shift+Up resize shrink height 5 px or 5 ppt
+bindsym $mod+Shift+Right resize grow width 5 px or 5 ppt
 
 
 set $bg-color 	         #2f343f
@@ -200,11 +199,12 @@ hide_edge_borders both
 # finds out, if available)
 bar {
         tray_output primary
-        status_command /home/alex/.config/i3/myi3status.sh
+        # status_command /home/alex/.config/i3/myi3status.sh
+        status_command i3status
 	position top
 colors {
 		background $bg-color
-	    	separator #757575
+		separator #757575
 		#                  border             background         text
 		focused_workspace  $bg-color          $bg-color          $text-color
 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
@@ -223,19 +223,19 @@ set $update && killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec $psst amixer -D pulse sset Master 5%+ $update
 bindsym XF86AudioLowerVolume exec $psst amixer -D pulse sset Master 5%- $update
 bindsym XF86AudioMute        exec $psst pactl set-sink-mute @DEFAULT_SINK@ toggle $update
-bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo +5%
-bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -5%
-bindsym Shift+XF86AudioMute        exec $psst pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo toggle $update
+#bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo +5%
+#bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -5%
+#bindsym Shift+XF86AudioMute        exec $psst pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo toggle $update
 
 # Spotify control
-bindsym XF86AudioPlay exec ~/.config/i3/musickeys.sh play
-bindsym XF86AudioNext exec ~/.config/i3/musickeys.sh next
-bindsym XF86AudioPrev exec ~/.config/i3/musickeys.sh prev
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86Tools exec spotify; workspace $workspace0
 
-bindsym $mod+comma exec ~/.config/i3/musickeys.sh play
-bindsym $mod+period exec ~/.config/i3/musickeys.sh next
-bindsym $mod+Shift+period exec ~/.config/i3/musickeys.sh prev
+bindsym $mod+comma exec playerctl play-pause
+bindsym $mod+period exec playerctl next
+bindsym $mod+Shift+period exec playerctl previous
 
 
 # Screenshots / Screencasts
@@ -253,12 +253,12 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 
 # Shutdown
-bindsym XF86Sleep exec sudo poweroff
-bindsym XF86Explorer exec sudo poweroff
+bindsym XF86Sleep exec poweroff
+bindsym XF86Explorer exec poweroff
 
 # Restart
-bindsym XF86LaunchA exec sudo reboot
-bindsym XF86Search exec sudo reboot
+bindsym XF86LaunchA exec reboot
+bindsym XF86Search exec reboot
 
 # Xrand monitor swapping
 bindsym Mod4 + p exec sudo ~/.config/i3/screen
@@ -280,6 +280,11 @@ bindsym $mod+t exec urxvt -e sudo cryptsetup --type tcrypt open /dev/sdc2 tc && 
 # bindsym $mod+Shift+t exec sudo cryptsetup close tc
 # bindsym $mod+Shift+z exec sudo umount ~/tc
 bindsym $mod+Shift+t exec sudo umount ~/tc && exec sudo cryptsetup close tc
+
+# ntfs
+bindsym $mod+n exec sudo mount -t ntfs-3g /dev/sda4 ~/ntfs
+
+bindsym $mod+Shift+n exec sudo umount ~/ntfs 
 
 # alternativ mit TC:
 # bindsym $mod+Shift+t exec truecrypt -d /dev/sdc2
