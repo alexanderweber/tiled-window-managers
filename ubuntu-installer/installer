@@ -25,6 +25,17 @@ else
   cp_wdir .config/i3status/config ~/.config/i3status/config
 fi
 
+### fonts
+read -r -p "fonts installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp -r .fonts ~/.fonts
+  sudo fc-cache -f -v
+fi
+
 ### my i3status config
 read -r -p "i3 my status config kopieren? [Y/n] " -n 1 response
 response=${response,,}    # tolower

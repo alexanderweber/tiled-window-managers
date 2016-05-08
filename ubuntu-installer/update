@@ -8,6 +8,8 @@ cp_wdir ~/.config/i3status/config .config/i3status/config
 cp_wdir ~/.Xresources .Xresources
 cp_wdir ~/.config/urxvt/urxvt.config .config/urxvt/urxvt.config
 
+cp -r ~/.fonts .fonts
+
 # update umpv dateien
 cp -R /usr/bin/umpv  usr/bin/umpv
 cp -R /usr/bin/umpv2 usr/bin/umpv2
