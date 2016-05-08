@@ -56,6 +56,7 @@ if [[ $response =~ ^[Nn]$ ]]; then
   echo -e "${CYAN}skip copying${NC}"
 else
   cp_wdir .Xresources ~/.Xresources
+  cp_wdir .config/urxvt/urxvt.config ~/.config/urxvt/urxvt.config
 fi
 
 read -r -p "udev on screen connect installieren? [Y/n] " -n 1 response
