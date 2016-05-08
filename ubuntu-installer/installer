@@ -1,0 +1,99 @@
+#! /bin/bash
+
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+cp_wdir() { mkdir -p -- "$(dirname -- "$2")" && cp -- "$1" "$2" ; }
+
+### i3 config kopieren
+read -r -p "i3 config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp_wdir .config/i3/config ~/.config/i3/config
+fi
+
+### i3status config
+read -r -p "i3status config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp_wdir .config/i3status/config ~/.config/i3status/config
+fi
+
+### my i3status config
+read -r -p "i3 my status config kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp .config/i3/myi3status.sh ~/.config/i3/myi3status.sh
+fi
+
+
+### Rofi
+read -r -p "rofi installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installing${NC}"
+else
+  cp_wdir .config/rofi/dmenu_nested.py ~/.config/rofi/dmenu_nested.py
+  cp_wdir .config/rofi/programs.json ~/.config/rofi/programs.json
+  cp_wdir .config/rofi/screen_choice.json ~/.config/rofi/screen_choice.json
+fi
+
+### Xresources
+read -r -p "Xresources kopieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip copying${NC}"
+else
+  cp_wdir .Xresources ~/.Xresources
+fi
+
+read -r -p "udev on screen connect installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installation${NC}"
+else
+  sudo cp ./etc/udev/rules.d/95-monitor-hotplug.rules /etc/udev/rules.d/95-monitor-hotplug.rules
+  cp ./.config/i3/screen-connected ~/.config/i3/screen-connected
+fi
+
+### spotify installieren
+read -r -p "spotify installieren? [Y/n] " -n 1 response
+response=${response,,}    # tolower
+echo
+if [[ $response =~ ^[Nn]$ ]]; then
+  echo -e "${CYAN}skip installing${NC}"
+else
+  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+  sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com D2C19886
+  sudo apt-get update
+  sudo apt-get install spotify-client
+  sudo apt-get install xdotool
+
+  read -r -p "musickeys.sh kopieren (Belegung der spotify keys)? [Y/n] " -n 1 response
+  response=${response,,}    # tolower
+  if [[ $response =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}skip copying${NC}"
+  else
+    cp .config/i3/musickeys.sh ~/.config/i3/musickeys.sh
+  fi
+fi
+
+sudo apt-get install alsa-utils
+sudo apt-get install pulseaudio
+sudo apt-get install pavucontrol
+sudo apt-get install rofi
+sudo apt-get install ranger
+
+xrdb -merge ~/.Xresources

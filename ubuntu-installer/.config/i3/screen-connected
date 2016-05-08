@@ -1,0 +1,33 @@
+#! /bin/bash
+
+MONITOR="DP1-1"
+TV="DP1-2"
+INTERNAL="eDP1"
+
+xrandr --listactivemonitors | grep $INTERNAL
+if [ $? -eq 0 ]; then
+  xrandr --listactivemonitors | grep $MONITOR
+  if [ $? -eq 0 ]; then
+    exit
+  else
+    xrandr | grep $MONITOR | grep " connected"
+    if [ $? -eq 0 ]; then
+      xrandr --output $MONITOR --primary --auto --output $INTERNAL --off
+    else
+      exit
+    fi
+  fi
+else
+  xrandr --listactivemonitors | grep $MONITOR
+  if [ $? -eq 0 ]; then
+    xrandr | grep $MONITOR | grep " connected"
+    if [ $? -eq 0 ]; then
+      exit
+    else
+      xrandr --output $INTERNAL --primary --auto
+    fi
+  else
+    exit
+  fi
+fi
+
